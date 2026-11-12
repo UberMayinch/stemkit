@@ -12,6 +12,24 @@ Everything runs locally — no accounts, no API keys. Your songs, searches and a
   <img src="docs/stemkit.png" alt="StemKit splitting Queen's Bohemian Rhapsody into six stems — video player, presets and color-coded waveform lanes" width="100%" />
 </p>
 
+## Quickstart: Claude + make-cover (this fork)
+
+Record yourself playing along to any song. Claude finds the track, splits it with StemKit, swaps in your instrument, syncs your take to the bar, cleans up the audio and writes the finished video.
+
+You need: StemKit installed and opened once (it sets up its engine), [Claude Code](https://claude.com/claude-code), `ffmpeg` and [uv](https://docs.astral.sh/uv/).
+
+```bash
+git clone https://github.com/UberMayinch/stemkit && cd stemkit
+claude mcp add --scope user stemkit -- uv run --quiet --project "$PWD/mcp" stemkit-mcp
+mkdir -p ~/.claude/skills && ln -s "$PWD/mcp/skills/make-cover" ~/.claude/skills/make-cover
+```
+
+Restart Claude Code, then ask:
+
+> make a cover from ~/Videos/take.mp4, song is Fred again.. – Victory Lap Five, I'm on drums
+
+You get `take_with_stems.mp4` next to your video. Not happy with it? Say "it's a bar late", "the snare is harsh" or "cut it earlier", and Claude re-renders. More in [`mcp/README.md`](mcp/README.md).
+
 ## Features
 
 - Built-in YouTube search, or paste a link

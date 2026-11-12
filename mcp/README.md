@@ -60,3 +60,31 @@ and checks the Python side gives the same ids, names, pitch, pan and key results
 [`skills/make-cover`](skills/make-cover/SKILL.md) is a Claude Code skill. Record yourself
 playing along to a song, and it finds the song, splits it, drops your instrument's stem,
 syncs your take to the bar, cleans up your audio, mixes, and writes the video.
+
+### Install the make-cover skill
+
+After registering the server (Setup above), link the skill into Claude Code's skills folder
+and restart Claude Code:
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s "/path/to/stemkit/mcp/skills/make-cover" ~/.claude/skills/make-cover
+```
+
+On Windows, copy the folder to `%USERPROFILE%\.claude\skills\make-cover` instead.
+Keep the checkout where it is: the link points into it.
+
+### Use it
+
+- **Ask:** "make a cover from ~/Videos/take.mp4, song is Artist – Title, I'm on drums".
+  The instrument can be drums, bass, guitar, piano, vocals or other.
+- **What it does:** finds the original on YouTube, splits it (about 3 min on CPU, instant if
+  the song is already in your StemKit library), syncs and cleans your take, and writes
+  `take_with_stems.mp4` (drums) or `take_with_band.mp4` next to the input. Your original
+  file is never touched.
+- **Fix it by ear:**
+  - "off by a bar" or "a little late": re-syncs.
+  - "cut earlier": moves the end point.
+  - "my part louder", "less harsh", "more kick", "less ducking": changes the mix.
+- **Requirements:** the video's audio should be mostly your own instrument. Headphones
+  while recording help.
